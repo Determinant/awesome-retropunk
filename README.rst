@@ -23,7 +23,7 @@ Preview
 Install
 -------
 
-- Checkout the repo content in your ``~/.config/awesome/``
+- Checkout the repo content in your Awesome WM directory by ``git clone https://github.com/Determinant/awesome-retropunk.git ~/.config/awesome/``
 - Checkout the subrepo by ``git submodule update --init --recursive``
 - Run ``make all`` to compile the cairohack cpp file in the submodule
 - Download and install the `cherry <https://github.com/turquoise-hexagon/cherry>`_ and `siji <https://github.com/stark/siji>`_ font
