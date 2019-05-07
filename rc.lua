@@ -5,13 +5,13 @@ local naughty = require("naughty")
 local menubar = require("menubar")
 local wibox = require("wibox")
 local vicious = require("vicious")
+local lfs = require("lfs")
+local cairo = require("lgi").cairo
+local cairohack = require("myawesomewidgets.cairohack")
 local mpdbox = require("myawesomewidgets.mpdbox")
 local smartnetbox = require("myawesomewidgets.smartnetbox")
 local cputide = require("myawesomewidgets.cputide")
 local memwatermark = require("myawesomewidgets.memwatermark")
-local lfs = require("lfs")
-local cairo = require("lgi").cairo
-local cairohack = require("myawesomewidgets.cairohack")
 require("awful.autofocus")
 
 local function shorten_str(s, len)
@@ -400,7 +400,6 @@ function focus_switch_by_idx(idx)
     end
 end
 
--- {{{ Key bindings
 local global_keys = awful.util.table.join(
     awful.key({modkey}, "Left",   awful.tag.viewprev),
     awful.key({modkey}, "Right",  awful.tag.viewnext),

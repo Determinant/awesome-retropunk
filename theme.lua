@@ -19,7 +19,7 @@ theme.wallpaper = "~/Pictures/bg/paprika.jpg"
 theme.orange1 = orange1
 theme.yellow1 = yellow1
 
-theme.font = "pixel 10"
+theme.font = "pixel 9"
 theme.notification_font = theme.font
 theme.notification_icon_size = 32
 theme.notification_border_width = 2
