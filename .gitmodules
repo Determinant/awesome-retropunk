@@ -1,0 +1,3 @@
+[submodule "myawesomewidgets"]
+	path = myawesomewidgets
+	url = https://github.com/Determinant/myawesomewidgets.git
