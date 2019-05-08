@@ -339,6 +339,9 @@ awful.screen.connect_for_each_screen(function(s)
                 if c.maximized then
                     name = name .. "&#xe105;"
                 end
+                if c.minimized then
+                    name = name .. "&#xe079;"
+                end
                 if c.floating then
                     name = name .. "&#xe1b4;"
                 end
