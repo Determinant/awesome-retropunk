@@ -336,11 +336,11 @@ awful.screen.connect_for_each_screen(function(s)
                 if c.maximized_vertical then
                     name = name .. "&#xe108;"
                 end
-                if c.floating then
-                    name = name .. "&#xe1b4;"
-                end
                 if c.maximized then
                     name = name .. "&#xe105;"
+                end
+                if c.floating then
+                    name = name .. "&#xe1b4;"
                 end
                 self.children[1].children[1].children[2].children[1]:set_markup(name)
             end
@@ -469,9 +469,26 @@ local client_keys = awful.util.table.join(
         c.minimized = true
     end),
     awful.key({modkey}, "m", function (c)
-        local max = c.maximized_horizontal or c.maximized_vertical
-        c.maximized_horizontal = not max
-        c.maximized_vertical = not max
+        c.maximized_horizontal = false
+        c.maximized_vertical = false
+        local max = c.maximized
+        if max then
+            c.maximized = false
+        else
+            c.maximized = true
+        end
+    end),
+    awful.key({modkey}, "Up", function (c)
+        if c.maximized then
+            c.maximized = false
+        end
+        c.maximized_horizontal = not c.maximized_horizontal
+    end),
+    awful.key({modkey}, "Down", function (c)
+        if c.maximized then
+            c.maximized = false
+        end
+        c.maximized_vertical = not c.maximized_vertical
     end))
 
 for i = 1, 9 do
