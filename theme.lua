@@ -13,7 +13,7 @@ local background1 = "#282828"
 local background2 = "#32302f"
 local background3 = "#3c3836"
 local background4 = "#504945"
-local hidpi = true
+local hidpi = false
 
 theme = {}
 theme.scale_factor = (hidpi and 1.5) or 1
@@ -21,8 +21,8 @@ theme.wallpaper = "~/Pictures/bg/paprika.jpg"
 theme.orange1 = orange1
 theme.yellow1 = yellow1
 
-theme.font = (hidpi and "pixel 10") or "pixel 9"
-theme.minor_font = (hidpi and "pixel 10") or "pixel 8"
+theme.font = (hidpi and "pixel 10") or "pixel 11"
+theme.minor_font = (hidpi and "pixel 10") or "pixel 9"
 theme.notification_font = theme.font
 theme.notification_icon_size = 32
 theme.notification_border_width = 2
