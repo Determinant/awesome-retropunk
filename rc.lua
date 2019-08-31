@@ -218,7 +218,7 @@ end
 
 awful.screen.connect_for_each_screen(function(s)
     if beautiful.wallpaper then
-        gears.wallpaper.maximized(beautiful.wallpaper, s, true)
+        gears.wallpaper.centered(beautiful.wallpaper, s, beautiful.bg_normal, 1)
     end
     awful.tag(tags.names, s, tags.layout)
     s.mypromptbox = awful.widget.prompt()

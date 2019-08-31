@@ -21,8 +21,8 @@ theme.wallpaper = "~/Pictures/bg/paprika.jpg"
 theme.orange1 = orange1
 theme.yellow1 = yellow1
 
-theme.font = "pixel 9"
-theme.minor_font = (hidpi and "pixel 9") or "pixel 8"
+theme.font = (hidpi and "pixel 10") or "pixel 9"
+theme.minor_font = (hidpi and "pixel 10") or "pixel 8"
 theme.notification_font = theme.font
 theme.notification_icon_size = 32
 theme.notification_border_width = 2
