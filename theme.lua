@@ -21,7 +21,7 @@ theme.wallpaper = "~/Pictures/bg/paprika.jpg"
 theme.orange1 = orange1
 theme.yellow1 = yellow1
 
-theme.font = (hidpi and "pixel 10") or "pixel 11"
+theme.font = (hidpi and "pixel 10") or "pixel 10"
 theme.minor_font = (hidpi and "pixel 10") or "pixel 9"
 theme.notification_font = theme.font
 theme.notification_icon_size = 32
@@ -95,6 +95,7 @@ theme.layout_floating   = "/usr/share/awesome/themes/zenburn/layouts/floating.pn
 
 theme.systray_icon_spacing = 2
 theme.cputide_height = 28
+theme.cputide_width = 56
 theme.memwatermark_height = 28
 theme.memwatermark_width = (hidpi and 45) or 40
 theme.mpdbox_width = 100
