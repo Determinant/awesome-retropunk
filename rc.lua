@@ -84,10 +84,10 @@ end
 
 local tags = {
     names = {
-        'opt',
         'work',
+        'opt',
         'www',
-        'misc',
+        'chat',
         '{5}',
         '{6}',
         '{7}'
@@ -221,6 +221,8 @@ awful.screen.connect_for_each_screen(function(s)
         gears.wallpaper.centered(beautiful.wallpaper, s, beautiful.bg_normal, 1)
     end
     awful.tag(tags.names, s, tags.layout)
+    tags = root.tags()
+    tags[4].column_count = 3
     s.mypromptbox = awful.widget.prompt()
     s.mylayoutbox = awful.widget.layoutbox(s)
     s.mylayoutbox:buttons(
@@ -549,12 +551,28 @@ arules.rules = {
     },
     {
         rule = {class = "Google-chrome"},
-        properties = {tag = "www"} --, icon = chrome_icon._native}
+        properties = {tag = "www"}
     },
     {
         rule = {class = "URxvt"},
-        properties = {size_hints_honor = false}
+        properties = {tag = "opt", size_hints_honor = false}
     },
+    {
+        rule = {class = "Google-chrome", name = "Google Hangouts"},
+        properties = {tag = "chat"}
+    },
+    {
+        rule = {class = "Signal"},
+        properties = {tag = "chat"}
+    },
+    {
+        rule = {class = "TelegramDesktop"},
+        properties = {tag = "chat"}
+    },
+    {
+        rule = {class = "Evince"},
+        properties = {tag = "work"}
+    }
 }
 
 client.connect_signal("manage", function (c, startup)
