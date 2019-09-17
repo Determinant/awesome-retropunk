@@ -13,7 +13,17 @@ local background1 = "#282828"
 local background2 = "#32302f"
 local background3 = "#3c3836"
 local background4 = "#504945"
-local hidpi = false
+local hidpi = nil -- auto detect
+
+local max_screen_width = 0
+for s in screen do
+    if s.geometry.width > max_screen_width then
+        max_screen_width = s.geometry.width
+    end
+end
+if hidpi == nil then
+    hidpi = max_screen_width > 2048
+end
 
 theme = {}
 theme.scale_factor = (hidpi and 1.5) or 1

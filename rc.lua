@@ -296,7 +296,7 @@ awful.screen.connect_for_each_screen(function(s)
                         {0.408, 0.616, 0.416, 1}
                     }
 
-                    col = {palette[bkdr_hash(c.icon_name, #palette) + 1]}
+                    col = {palette[bkdr_hash(c.class, #palette) + 1]}
                 else
                     local s = gears.surface(c.icon)
                     local t = cairo.ImageSurface.create(cairo.Format.ARGB32, s:get_width(), s:get_height())
