@@ -13,13 +13,26 @@ local background1 = "#282828"
 local background2 = "#32302f"
 local background3 = "#3c3836"
 local background4 = "#504945"
+local hidpi = nil -- auto detect
+
+local max_screen_width = 0
+for s in screen do
+    if s.geometry.width > max_screen_width then
+        max_screen_width = s.geometry.width
+    end
+end
+if hidpi == nil then
+    hidpi = max_screen_width > 2048
+end
 
 theme = {}
+theme.scale_factor = (hidpi and 1.5) or 1
 theme.wallpaper = "~/Pictures/bg/paprika.jpg"
 theme.orange1 = orange1
 theme.yellow1 = yellow1
 
-theme.font = "pixel 9"
+theme.font = (hidpi and "pixel 10") or "pixel 10"
+theme.minor_font = (hidpi and "pixel 10") or "pixel 9"
 theme.notification_font = theme.font
 theme.notification_icon_size = 32
 theme.notification_border_width = 2
@@ -92,10 +105,13 @@ theme.layout_floating   = "/usr/share/awesome/themes/zenburn/layouts/floating.pn
 
 theme.systray_icon_spacing = 2
 theme.cputide_height = 28
+theme.cputide_width = 56
 theme.memwatermark_height = 28
+theme.memwatermark_width = (hidpi and 45) or 40
 theme.mpdbox_width = 100
 theme.main_height = 26
 theme.menu_height = 20
 theme.menu_width = 250
+theme.siji_icon_padding = (hidpi and 0) or 2
 
 return theme

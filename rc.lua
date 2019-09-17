@@ -24,6 +24,8 @@ end
 local beautiful = require("beautiful")
 beautiful.init(require("theme"))
 
+local function actual_px(px) return (beautiful.scale_factor or 1) * px end
+
 if awesome.startup_errors then
     naughty.notify({ preset = naughty.config.presets.critical,
                     title = "Oops, there were errors during startup!",
@@ -60,8 +62,8 @@ naughty.config.defaults = {
     timeout = 10,
     screen = 1,
     position = "top_right",
-    margin = 8,
-    gap = 1,
+    margin = actual_px(8),
+    gap = actual_px(1),
     ontop = true,
     icon = nil,
     hover_timeout = nil
@@ -82,10 +84,10 @@ end
 
 local tags = {
     names = {
-        'opt',
         'work',
+        'opt',
         'www',
-        'misc',
+        'chat',
         '{5}',
         '{6}',
         '{7}'
@@ -126,24 +128,24 @@ local tray_widget = wibox.widget {
             {
                 widget = wibox.widget.systray,
             },
-            left = 6,
-            top = 1,
-            bottom = 1,
-            right = 6,
+            left = actual_px(6),
+            top = actual_px(1),
+            bottom = actual_px(1),
+            right = actual_px(6),
             widget = wibox.container.margin
         },
         widget = wibox.container.background,
         shape = gears.shape.rounded_bar,
         bg = beautiful.bg_systray
     },
-    top = 1,
-    bottom = 1,
+    top = actual_px(1),
+    bottom = actual_px(1),
     widget = wibox.container.margin
 }
 
 local clock_widget = wibox.widget {
-    left = 5,
-    right = 5,
+    left = actual_px(5),
+    right = actual_px(5),
     awful.widget.textclock(
         string.format("<span color='%s'>%%a</span> <span color='%s'>%%b %%d</span> %%H:%%M:%%S",
         beautiful.yellow1, beautiful.orange1), 1),
@@ -216,9 +218,11 @@ end
 
 awful.screen.connect_for_each_screen(function(s)
     if beautiful.wallpaper then
-        gears.wallpaper.maximized(beautiful.wallpaper, s, true)
+        gears.wallpaper.centered(beautiful.wallpaper, s, beautiful.bg_normal, 1)
     end
     awful.tag(tags.names, s, tags.layout)
+    tags = root.tags()
+    tags[4].column_count = 3
     s.mypromptbox = awful.widget.prompt()
     s.mylayoutbox = awful.widget.layoutbox(s)
     s.mylayoutbox:buttons(
@@ -240,7 +244,7 @@ awful.screen.connect_for_each_screen(function(s)
             shape = gears.shape.rounded_bar
         },
         layout = {
-            spacing = 3,
+            spacing = actual_px(3),
             layout = wibox.layout.flex.horizontal
         },
         widget_template = {
@@ -250,19 +254,19 @@ awful.screen.connect_for_each_screen(function(s)
                         {
                             widget = wibox.widget.imagebox,
                         },
-                        top = 4,
-                        bottom = 4,
-                        left = 4,
-                        right = 3,
+                        top = actual_px(4),
+                        bottom = actual_px(4),
+                        left = actual_px(4),
+                        right = actual_px(3),
                         widget  = wibox.container.margin,
                     },
                     {
                         {
                             widget = wibox.widget.textbox,
-                            font = "pixel 8"
+                            font = beautiful.minor_font or "pixel 8"
                         },
-                        top = 2,
-                        right = 2,
+                        top = actual_px(2),
+                        right = actual_px(2),
                         layout = wibox.container.margin
                     },
                     {
@@ -271,8 +275,8 @@ awful.screen.connect_for_each_screen(function(s)
                     },
                     layout = wibox.layout.fixed.horizontal,
                 },
-                left  = 1,
-                right = 2,
+                left = actual_px(1),
+                right = actual_px(2),
                 widget = wibox.container.margin
             },
             id = 'background_role',
@@ -292,7 +296,7 @@ awful.screen.connect_for_each_screen(function(s)
                         {0.408, 0.616, 0.416, 1}
                     }
 
-                    col = {palette[bkdr_hash(c.icon_name, #palette) + 1]}
+                    col = {palette[bkdr_hash(c.class, #palette) + 1]}
                 else
                     local s = gears.surface(c.icon)
                     local t = cairo.ImageSurface.create(cairo.Format.ARGB32, s:get_width(), s:get_height())
@@ -302,7 +306,7 @@ awful.screen.connect_for_each_screen(function(s)
 
                     col = cairohack.downsample(t:get_data(), t:get_width(), t:get_height());
                 end
-                local l = 16
+                local l = math.ceil(actual_px(beautiful.main_height * 0.6))
                 local icon = cairo.ImageSurface.create(cairo.Format.ARGB32, 16, 16)
                 local cr = cairo.Context(icon)
                 local pos = {
@@ -350,7 +354,7 @@ awful.screen.connect_for_each_screen(function(s)
         },
         buttons = mytasklist.buttons,
     })
-    s.mywibox = awful.wibox({ position = "top", screen = s, height = beautiful.main_height })
+    s.mywibox = awful.wibox({ position = "top", screen = s, height = actual_px(beautiful.main_height) })
 
     local left_layout = wibox.layout.fixed.horizontal()
     left_layout:add(s.mytaglist)
@@ -362,7 +366,7 @@ awful.screen.connect_for_each_screen(function(s)
         s.mypromptbox,
         awful.widget.prompt(),
         layout = wibox.layout.margin,
-        left = 3
+        left = actual_px(3)
     })
 
     local right_layout = wibox.layout.fixed.horizontal()
@@ -374,7 +378,7 @@ awful.screen.connect_for_each_screen(function(s)
     local tasklist = wibox.widget {
         s.mytasklist,
         layout = wibox.layout.margin,
-        margins = 3
+        margins = actual_px(3)
     }
     layout:set_left(left_layout)
     layout:set_middle(tasklist)
@@ -531,7 +535,7 @@ root.keys(global_keys)
 arules.rules = {
     {
         rule = {},
-        properties = {border_width = beautiful.border_width,
+        properties = {border_width = actual_px(beautiful.border_width),
                     border_color = beautiful.border_normal,
                     focus = awful.client.focus.filter,
                     keys = client_keys,
@@ -547,12 +551,28 @@ arules.rules = {
     },
     {
         rule = {class = "Google-chrome"},
-        properties = {tag = "www"} --, icon = chrome_icon._native}
+        properties = {tag = "www"}
     },
     {
         rule = {class = "URxvt"},
-        properties = {size_hints_honor = false}
+        properties = {tag = "opt", size_hints_honor = false}
     },
+    {
+        rule = {class = "Google-chrome", name = "Google Hangouts"},
+        properties = {tag = "chat"}
+    },
+    {
+        rule = {class = "Signal"},
+        properties = {tag = "chat"}
+    },
+    {
+        rule = {class = "TelegramDesktop"},
+        properties = {tag = "chat"}
+    },
+    {
+        rule = {class = "Evince"},
+        properties = {tag = "work"}
+    }
 }
 
 client.connect_signal("manage", function (c, startup)
