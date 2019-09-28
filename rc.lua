@@ -71,7 +71,11 @@ naughty.config.defaults = {
 
 naughty.config.notify_callback = function(args)
     lines = {}
-    for s in args.text:gmatch("[^\r\n]+") do
+    text = args.text
+    if text == nil then
+        text = args.message
+    end
+    for s in text:gmatch("[^\r\n]+") do
         if #lines >= 10 then
             table.insert(lines, "...")
             break
