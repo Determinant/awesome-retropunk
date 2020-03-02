@@ -13,7 +13,6 @@ local background1 = "#282828"
 local background2 = "#32302f"
 local background3 = "#3c3836"
 local background4 = "#504945"
-local hidpi = nil -- auto detect
 
 local max_screen_width = 0
 for s in screen do
@@ -21,12 +20,16 @@ for s in screen do
         max_screen_width = s.geometry.width
     end
 end
-if hidpi == nil then
-    hidpi = max_screen_width > 2048
+
+local dpi = 96
+local scale_factor = 1
+local env_mydpi = os.getenv("MYDPI")
+if env_mydpi ~= nil then
+    dpi = env_mydpi
 end
 
 theme = {}
-theme.scale_factor = (hidpi and 1.5) or 1
+theme.scale_factor = dpi / 96
 theme.wallpaper = "~/Pictures/bg/paprika.jpg"
 theme.orange1 = orange1
 theme.yellow1 = yellow1

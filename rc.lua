@@ -32,7 +32,7 @@ if awesome.startup_errors then
                     text = awesome.startup_errors })
 end
 
-local terminal = "urxvt"
+local terminal = "alacritty"
 local modkey = "Mod4"
 
 local layouts = {
