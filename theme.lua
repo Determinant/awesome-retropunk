@@ -41,15 +41,16 @@ theme.notification_icon_size = 32
 theme.notification_border_width = 2
 
 theme.fg_normal = foreground1
-theme.fg_focus  = foreground2
+theme.fg_focus  = background1
 theme.fg_urgent = red1
 theme.bg_normal = background1 .. "ea"
 theme.bg_focus  = background1 .. "ea"
 theme.bg_urgent = background1 .. "ea"
 theme.bg_systray = background1 .. "ea"
 
-theme.tasklist_bg_focus  = "#00000020"
-theme.tasklist_bg_normal = "#ffffff0a"
+theme.tasklist_bg_focus  = foreground1
+theme.tasklist_bg_normal = background2
+theme.taglist_bg_focus = foreground1
 
 theme.notification_bg = background2 .. "df"
 theme.notification_fg = theme.fg_tooltip

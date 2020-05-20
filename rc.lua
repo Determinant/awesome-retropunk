@@ -256,6 +256,7 @@ awful.screen.connect_for_each_screen(function(s)
                 {
                     {
                         {
+                            id = 'background_role',
                             widget = wibox.widget.imagebox,
                         },
                         top = actual_px(4),
@@ -335,6 +336,16 @@ awful.screen.connect_for_each_screen(function(s)
                     cr:fill()
                 end
                 iconbox:set_image(icon)
+                c.update_status_icon = function(name)
+                    if name ~= nil then
+                        c.__status_icon = name
+                    end
+                    local mk = c.__status_icon
+                    if c.isfocused then
+                        mk = string.format("<span color='%s'>%s</span>", beautiful.fg_focus, mk)
+                    end
+                    self.children[1].children[1].children[2].children[1]:set_markup(mk)
+                end
             end,
             update_callback = function (self, c, index, clients)
                 local name = ""
@@ -353,7 +364,7 @@ awful.screen.connect_for_each_screen(function(s)
                 if c.floating then
                     name = name .. "&#xe1b4;"
                 end
-                self.children[1].children[1].children[2].children[1]:set_markup(name)
+                c.update_status_icon(name)
             end
         },
         buttons = mytasklist.buttons,
@@ -576,6 +587,10 @@ arules.rules = {
     {
         rule = {class = "Evince"},
         properties = {tag = "work"}
+    },
+    {
+        rule = {class = "discord"},
+        properties = {tag = "chat"}
     }
 }
 
@@ -589,8 +604,21 @@ client.connect_signal("manage", function (c, startup)
     end
 end)
 
-client.connect_signal("focus", function(c) c.border_color = beautiful.border_focus end)
-client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
+client.connect_signal("focus", function(c)
+    c.isfocused = true
+    if c.update_status_icon ~= nil then
+        c.update_status_icon(nil)
+    end
+    c.border_color = beautiful.border_focus
+end)
+client.connect_signal("unfocus", function(c)
+    c.isfocused = false
+    if c.update_status_icon ~= nil then
+        c.update_status_icon(nil)
+    end
+    c.border_color = beautiful.border_normal
+end)
+
 do
     local in_error = false
     awesome.connect_signal("debug::error", function (err)
