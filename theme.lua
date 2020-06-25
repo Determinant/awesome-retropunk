@@ -62,6 +62,10 @@ theme.cputide_bg_color = background4
 theme.cputide_low_color = yellow1
 theme.cputide_high_color = "#ff0000"
 
+theme.gputide_bg_color = background4
+theme.gputide_low_color = yellow1
+theme.gputide_high_color = "#ff0000"
+
 theme.memwatermark_bg_color = theme.cputide_bg_color
 theme.memwatermark_graph_color = {
     type = "linear",

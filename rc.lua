@@ -11,6 +11,7 @@ local cairohack = require("myawesomewidgets.cairohack")
 local mpdbox = require("myawesomewidgets.mpdbox")
 local smartnetbox = require("myawesomewidgets.smartnetbox")
 local cputide = require("myawesomewidgets.cputide")
+local gputide = require("myawesomewidgets.gputide")
 local memwatermark = require("myawesomewidgets.memwatermark")
 require("awful.autofocus")
 
@@ -114,6 +115,16 @@ local mycputide = wibox.widget {
     {
         layout = wibox.layout.flex.vertical,
         cputide()
+    }
+}
+
+local mygputide = wibox.widget {
+    layout = wibox.layout.margin,
+    left = 5,
+    right = 5,
+    {
+        layout = wibox.layout.flex.vertical,
+        gputide()
     }
 }
 
@@ -374,6 +385,7 @@ awful.screen.connect_for_each_screen(function(s)
     local left_layout = wibox.layout.fixed.horizontal()
     left_layout:add(s.mytaglist)
     left_layout:add(mycputide)
+    left_layout:add(mygputide)
     left_layout:add(mymemwatermark)
     left_layout:add(mysmartnetbox)
     left_layout:add(mympdbox)
