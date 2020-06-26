@@ -120,7 +120,7 @@ local mycputide = wibox.widget {
 
 local mygputide = wibox.widget {
     layout = wibox.layout.margin,
-    left = 5,
+    left = 0,
     right = 5,
     {
         layout = wibox.layout.flex.vertical,
