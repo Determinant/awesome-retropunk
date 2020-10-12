@@ -89,11 +89,11 @@ end
 
 local tags = {
     names = {
-        'work',
-        'opt',
+        'workA',
+        'workB',
         'www',
         'chat',
-        '{5}',
+        'game',
         '{6}',
         '{7}'
     },
@@ -598,11 +598,15 @@ arules.rules = {
     },
     {
         rule = {class = "Evince"},
-        properties = {tag = "work"}
+        properties = {tag = "workB"}
     },
     {
         rule = {class = "discord"},
         properties = {tag = "chat"}
+    },
+    {
+        rule = {class = "Steam"},
+        properties = {tag = "game"}
     }
 }
 
