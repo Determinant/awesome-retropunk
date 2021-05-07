@@ -607,7 +607,11 @@ arules.rules = {
     {
         rule = {class = "Steam"},
         properties = {tag = "game"}
-    }
+    },
+    {
+        rule = {name = "Main@thinkorswim [build 1966]"},
+        properties = {tag = "game"}
+    },
 }
 
 client.connect_signal("manage", function (c, startup)
@@ -681,4 +685,4 @@ local function run_once(process, cmd)
         return awful.util.spawn(cmd or process)
 end
 
-run_once("compton")
+run_once("picom")
