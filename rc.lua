@@ -109,7 +109,7 @@ local tags = {
 }
 
 local mycputide = wibox.widget {
-    layout = wibox.layout.margin,
+    layout = wibox.container.margin,
     left = 5,
     right = 5,
     {
@@ -119,7 +119,7 @@ local mycputide = wibox.widget {
 }
 
 local mygputide = wibox.widget {
-    layout = wibox.layout.margin,
+    layout = wibox.container.margin,
     left = 0,
     right = 5,
     {
@@ -161,10 +161,10 @@ local tray_widget = wibox.widget {
 local clock_widget = wibox.widget {
     left = actual_px(5),
     right = actual_px(5),
-    awful.widget.textclock(
+    wibox.widget.textclock(
         string.format("<span color='%s'>%%a</span> <span color='%s'>%%b %%d</span> %%H:%%M:%%S",
         beautiful.yellow1, beautiful.orange1), 1),
-    layout = wibox.layout.margin
+    layout = wibox.container.margin
 }
 
 --local chrome_icon = gears.surface.load("/home/ymf/Downloads/Pixel-Theme/apps/scalable/chrome.svg")
@@ -236,7 +236,7 @@ awful.screen.connect_for_each_screen(function(s)
         gears.wallpaper.centered(beautiful.wallpaper, s, beautiful.bg_normal, 1)
     end
     awful.tag(tags.names, s, tags.layout)
-    tags = root.tags()
+    local tags = root.tags()
     tags[4].column_count = 3
     s.mypromptbox = awful.widget.prompt()
     s.mylayoutbox = awful.widget.layoutbox(s)
@@ -380,7 +380,7 @@ awful.screen.connect_for_each_screen(function(s)
         },
         buttons = mytasklist.buttons,
     })
-    s.mywibox = awful.wibox({ position = "top", screen = s, height = actual_px(beautiful.main_height) })
+    s.mywibox = awful.wibar({ position = "top", screen = s, height = actual_px(beautiful.main_height) })
 
     local left_layout = wibox.layout.fixed.horizontal()
     left_layout:add(s.mytaglist)
@@ -392,7 +392,7 @@ awful.screen.connect_for_each_screen(function(s)
     left_layout:add(wibox.widget {
         s.mypromptbox,
         awful.widget.prompt(),
-        layout = wibox.layout.margin,
+        layout = wibox.container.margin,
         left = actual_px(3)
     })
 
@@ -404,7 +404,7 @@ awful.screen.connect_for_each_screen(function(s)
     local layout = wibox.layout.align.horizontal()
     local tasklist = wibox.widget {
         s.mytasklist,
-        layout = wibox.layout.margin,
+        layout = wibox.container.margin,
         margins = actual_px(3)
     }
     layout:set_left(left_layout)
@@ -530,7 +530,7 @@ for i = 1, 9 do
         awful.key({modkey}, "#" .. i + 9, function ()
             local screen = awful.screen.focused()
             if screen.tags[i] then
-                awful.tag.viewonly(screen.tags[i])
+                screen.tags[i]:view_only()
             end
         end),
         awful.key({modkey, "Control"}, "#" .. i + 9, function ()
@@ -682,7 +682,7 @@ local function run_once(process, cmd)
                 return
             end
         end
-        return awful.util.spawn(cmd or process)
+        return awful.spawn(cmd or process)
 end
 
-run_once("picom")
+--run_once("picom")
