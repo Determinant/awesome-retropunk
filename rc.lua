@@ -234,7 +234,6 @@ end
 awful.screen.connect_for_each_screen(function(s)
     if beautiful.wallpaper then
         if type(beautiful.wallpaper) == "table" then
-            print(beautiful.wallpaper[s.index])
             gears.wallpaper.centered(beautiful.wallpaper[s.index], s, beautiful.bg_normal, 1)
         else
             gears.wallpaper.centered(beautiful.wallpaper, s, beautiful.bg_normal, 1)
