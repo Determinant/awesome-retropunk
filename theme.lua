@@ -30,7 +30,10 @@ end
 
 theme = {}
 theme.scale_factor = dpi / 96
-theme.wallpaper = "~/Pictures/bg/paprika.jpg"
+theme.wallpaper = {
+    "/home/ymf/Pictures/bg/paprika.jpg",
+    "/home/ymf/Pictures/bg/burning_heart.jpg"
+}
 theme.orange1 = orange1
 theme.yellow1 = yellow1
 

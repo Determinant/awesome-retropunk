@@ -233,7 +233,12 @@ end
 
 awful.screen.connect_for_each_screen(function(s)
     if beautiful.wallpaper then
-        gears.wallpaper.centered(beautiful.wallpaper, s, beautiful.bg_normal, 1)
+        if type(beautiful.wallpaper) == "table" then
+            print(beautiful.wallpaper[s.index])
+            gears.wallpaper.centered(beautiful.wallpaper[s.index], s, beautiful.bg_normal, 1)
+        else
+            gears.wallpaper.centered(beautiful.wallpaper, s, beautiful.bg_normal, 1)
+        end
     end
     awful.tag(tags.names, s, tags.layout)
     local tags = root.tags()
@@ -412,6 +417,9 @@ awful.screen.connect_for_each_screen(function(s)
     layout:set_right(right_layout)
     s.mywibox:set_widget(layout)
 end)
+
+mouse.screen = screen.primary
+mouse.coords({ x = screen.primary.geometry.width / 2, y = screen.primary.geometry.height / 2 })
 
 root.buttons(awful.util.table.join(
     awful.button({}, 4, awful.tag.viewnext),
