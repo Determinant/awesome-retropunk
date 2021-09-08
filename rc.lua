@@ -73,6 +73,10 @@ naughty.config.defaults = {
 naughty.config.notify_callback = function(args)
     lines = {}
     text = args.text
+    if args.urgency == "critical" then
+        args.bg = beautiful.notification_critical_bg
+        args.border_color = beautiful.notification_critical_border_color
+    end
     if text == nil then
         text = args.message
     end
