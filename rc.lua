@@ -61,7 +61,7 @@ naughty.config.presets = {
 
 naughty.config.defaults = {
     timeout = 10,
-    screen = 1,
+    -- screen = 1,
     position = "top_right",
     margin = actual_px(8),
     gap = actual_px(1),
@@ -158,11 +158,9 @@ local mytasklist = {}
 
 mytaglist.buttons = awful.util.table.join(
     awful.button({}, 1, awful.tag.viewonly),
-    awful.button({modkey}, 1, awful.client.movetotag),
     awful.button({}, 3, awful.tag.viewtoggle),
-    awful.button({modkey}, 3, awful.client.toggletag),
-    awful.button({}, 4, function(t) awful.tag.viewnext(awful.tag.getscreen(t)) end),
-    awful.button({}, 5, function(t) awful.tag.viewprev(awful.tag.getscreen(t)) end)
+    awful.button({}, 4, function(t) awful.tag.viewnext(t.screen) end),
+    awful.button({}, 5, function(t) awful.tag.viewprev(t.screen) end)
 )
 
 mytasklist.buttons = awful.util.table.join(
@@ -490,7 +488,7 @@ local client_keys = awful.util.table.join(
     awful.key({modkey, "Shift"}, "c", function (c) c:kill() end),
     awful.key({modkey, "Control"}, "space",  awful.client.floating.toggle),
     awful.key({modkey, "Control"}, "Return", function (c) c:swap(awful.client.getmaster()) end),
-    awful.key({modkey}, "o",      awful.client.movetoscreen),
+    awful.key({modkey}, "o",      function(c) c:move_to_screen() end),
     awful.key({modkey}, "n", function (c)
         c.minimized = true
     end),
@@ -534,13 +532,13 @@ for i = 1, 9 do
         awful.key({modkey, "Shift"}, "#" .. i + 9, function ()
             local screen = awful.screen.focused()
             if screen and screen.tags[i] then
-                awful.client.movetotag(screen.tags[i])
+                client.focus:move_to_tag(screen.tags[i])
             end
         end),
         awful.key({modkey, "Control", "Shift"}, "#" .. i + 9, function ()
             local screen = awful.screen.focused()
             if screen and screen.tags[i] then
-                awful.client.toggletag(screen.tags[i])
+                client.focus:toggle_tag(screen.tags[i])
             end
         end))
 end
