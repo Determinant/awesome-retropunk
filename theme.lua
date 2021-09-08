@@ -125,4 +125,104 @@ theme.menu_height = 20
 theme.menu_width = 250
 theme.siji_icon_padding = (hidpi and 0) or 2
 
+local awful = require("awful")
+local screen1_default_layout = awful.layout.suit.tile
+theme.tags = {
+    -- screen 0
+    {
+        names = {
+            'workA',
+            'workB',
+            'www',
+            'chat',
+            'game',
+            '{6}',
+            '{7}'
+        },
+        layout = {
+            screen1_default_layout,
+            screen1_default_layout,
+            screen1_default_layout,
+            screen1_default_layout,
+            screen1_default_layout,
+            screen1_default_layout,
+            screen1_default_layout,
+        }
+    },
+    -- screen 1
+    {
+        names = {
+            'workC',
+            'workD',
+            'www',
+            'chat',
+        },
+        layout = {
+            screen1_default_layout,
+            screen1_default_layout,
+            screen1_default_layout,
+            screen1_default_layout,
+            screen1_default_layout,
+            screen1_default_layout,
+            screen1_default_layout,
+        }
+    }
+
+}
+
+theme.screen_callback = function(screen) 
+    local tags = screen.tags
+    if screen.index == 1 then
+        tags[4].master_count = 0
+        tags[4].column_count = 3
+    else if screen.index == 2 then
+        tags[4].master_count = 3
+        tags[4].column_count = 1
+    end
+    end
+end
+
+theme.rules = {
+    {
+        rule = {class = "Pinentry"},
+        properties = {floating = true}
+    },
+    {
+        rule = {class = "Google-chrome"},
+        properties = {tag = "www"}
+    },
+    {
+        rule = {class = "URxvt"},
+        properties = {tag = "workA", size_hints_honor = false}
+    },
+    {
+        rule = {class = "Google-chrome", name = "Google Hangouts"},
+        properties = {tag = "chat"}
+    },
+    {
+        rule = {class = "Signal"},
+        properties = {tag = "chat"}
+    },
+    {
+        rule = {class = "TelegramDesktop"},
+        properties = {tag = "chat"}
+    },
+    {
+        rule = {class = "Evince"},
+        properties = {tag = "workB"}
+    },
+    {
+        rule = {class = "discord"},
+        properties = {tag = "chat"}
+    },
+    {
+        rule = {class = "Steam"},
+        properties = {tag = "game"}
+    },
+    {
+        rule = {name = "Main@thinkorswim [build 1966]"},
+        properties = {tag = "game"}
+    }
+}
+
 return theme

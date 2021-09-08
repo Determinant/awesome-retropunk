@@ -87,27 +87,6 @@ naughty.config.notify_callback = function(args)
     return args
 end
 
-local tags = {
-    names = {
-        'workA',
-        'workB',
-        'www',
-        'chat',
-        'game',
-        '{6}',
-        '{7}'
-    },
-    layout = {
-        layouts[1],
-        layouts[1],
-        layouts[1],
-        layouts[1],
-        layouts[1],
-        layouts[1],
-        layouts[1],
-    }
-}
-
 local mycputide = wibox.widget {
     layout = wibox.container.margin,
     left = 5,
@@ -239,9 +218,15 @@ awful.screen.connect_for_each_screen(function(s)
             gears.wallpaper.centered(beautiful.wallpaper, s, beautiful.bg_normal, 1)
         end
     end
-    awful.tag(tags.names, s, tags.layout)
-    local tags = root.tags()
-    tags[4].column_count = 3
+    local tag_cfg = beautiful.tags[s.index]
+    local cfg = beautiful.tags[1]
+    if tag_cfg then
+        cfg = tag_cfg
+    end
+    awful.tag(cfg.names, s, cfg.layout)
+    if beautiful.screen_callback then
+        beautiful.screen_callback(s)
+    end
     s.mypromptbox = awful.widget.prompt()
     s.mylayoutbox = awful.widget.layoutbox(s)
     s.mylayoutbox:buttons(
@@ -476,7 +461,7 @@ local global_keys = awful.util.table.join(
         end
     end),
 
-    awful.key({modkey}, "Return", function () awful.util.spawn(terminal) end),
+    awful.key({modkey}, "Return", function () awful.spawn(terminal) end),
     awful.key({modkey, "Control"}, "r", awesome.restart),
     awful.key({modkey, "Shift"  }, "q", awesome.quit),
 
@@ -579,46 +564,7 @@ arules.rules = {
                     maximized_vertical = false,
                     maximized = false}
     },
-    {
-        rule = {class = "Pinentry"},
-        properties = {floating = true}
-    },
-    {
-        rule = {class = "Google-chrome"},
-        properties = {tag = "www"}
-    },
-    {
-        rule = {class = "URxvt"},
-        properties = {tag = "opt", size_hints_honor = false}
-    },
-    {
-        rule = {class = "Google-chrome", name = "Google Hangouts"},
-        properties = {tag = "chat"}
-    },
-    {
-        rule = {class = "Signal"},
-        properties = {tag = "chat"}
-    },
-    {
-        rule = {class = "TelegramDesktop"},
-        properties = {tag = "chat"}
-    },
-    {
-        rule = {class = "Evince"},
-        properties = {tag = "workB"}
-    },
-    {
-        rule = {class = "discord"},
-        properties = {tag = "chat"}
-    },
-    {
-        rule = {class = "Steam"},
-        properties = {tag = "game"}
-    },
-    {
-        rule = {name = "Main@thinkorswim [build 1966]"},
-        properties = {tag = "game"}
-    },
+    table.unpack(beautiful.rules)
 }
 
 client.connect_signal("manage", function (c, startup)
